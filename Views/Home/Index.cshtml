@@ -1,0 +1,105 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<body class="bg-light">
+    <main class="container-fluid p-4 p-md-5">
+        <div class="row align-items-center py-5">
+            <div class="col-md-7">
+                <h1 class="fw-bold display-5">
+                    Report a water leak. Watch it get fixed.
+                </h1>
+                <p class="text-secondary fs-5 mt-3">
+                    Send a photo and a map pin. The water authority reviews it,
+                    and you follow every step until it is resolved.
+                </p>
+
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-controller="Dashboard"
+                           asp-action="Admin"
+                           class="btn btn-primary">
+                            Go to Admin Dashboard
+                        </a>
+                    }
+                    else if (User.IsInRole("Reporter"))
+                    {
+                        <a asp-controller="Dashboard"
+                           asp-action="Reporter"
+                           class="btn btn-primary">
+                            Go to My Dashboard
+                        </a>
+                    }
+                }
+                else
+                {
+                    <a asp-area="Identity"
+                       asp-page="/Account/Login"
+                       class="btn btn-primary">
+                        Login
+                    </a>
+
+                    <a asp-area="Identity"
+                       asp-page="/Account/Register"
+                       class="btn btn-outline-primary">
+                        Sign Up
+                    </a>
+                }
+
+            </div>
+
+            <div class="col-md-5 mt-4 mt-md-0">
+                <div class="card bg-info-subtle border-0">
+                    <div class="card-body text-center py-5">
+                        <h2 class="text-primary">Location Map</h2>
+                        <p class="text-secondary mb-0">
+                            Report and locate water leakage incidents.
+                        </p>
+                        <div class="display-1 mt-3">📍</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section id="how-it-works" class="mt-4">
+            <h2 class="fw-bold mb-4">How it works</h2>
+
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="fw-bold">1. Describe and add photos</h5>
+                            <p class="text-secondary">
+                                Say what you see and attach up to 3 photos.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="fw-bold">2. Mark it on the map</h5>
+                            <p class="text-secondary">
+                                Drop a pin where the water is leaking.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="fw-bold">3. Track the progress</h5>
+                            <p class="text-secondary">
+                                See the status from Pending to Resolved.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+</body>

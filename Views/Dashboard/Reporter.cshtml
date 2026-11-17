@@ -1,0 +1,117 @@
+﻿@model AquaDetect.ViewModels.ReporterDashboardViewModel
+@{
+    ViewData["Title"] = "Reporter Dashboard";
+}
+
+<main class="container-fluid p-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">
+            Welcome, @User.Identity?.Name
+        </h2>
+
+        <a href="#" class="btn btn-success">Report a new leak</a>
+    </div>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <p class="text-secondary mb-1">Total reports</p>
+                    <h2 class="fw-bold">@Model.TotalReports</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <p class="text-secondary mb-1">Pending</p>
+                    <h2 class="fw-bold">@Model.PendingReports</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <p class="text-secondary mb-1">In progress</p>
+                    <h2 class="fw-bold">3</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <p class="text-secondary mb-1">Resolved</p>
+                    <h2 class="fw-bold">@Model.InProgressReports</h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+
+            <h5 class="fw-bold mb-3">Your recent reports</h5>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Description</th>
+                            <th>Severity</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model.Reports.Any())
+                        {
+                            @foreach (var report in Model.Reports)
+                            {
+                                <tr>
+                                    <td>@report.ReportCode</td>
+                                    <td>@report.Description</td>
+                                    <td>@report.Severity</td>
+                                    <td>
+                                        @if (report.Status == "Resolved")
+                                        {
+                                            <span class="badge bg-success">Resolved</span>
+                                        }
+                                        else if (report.Status == "In Progress")
+                                        {
+                                            <span class="badge bg-info text-dark">In progress</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">@report.Status</span>
+                                        }
+                                    </td>
+                                    <td>@report.CreatedAt.ToString("dd MMM")</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">
+                                    You haven't submitted any reports yet.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</main>
